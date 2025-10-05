@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.oside.Controller">
+    <top>
+        <MenuBar>
+            <Menu text="Projeto">
+                <MenuItem text="Novo Projeto" onAction="#newProject"/>
+                <MenuItem text="Abrir Projeto" onAction="#openProject"/>
+                <MenuItem text="Salvar Projeto" onAction="#saveProject"/>
+                <MenuItem text="Gerar .zip/.iso" onAction="#generateOutput"/>
+            </Menu>
+        </MenuBar>
+    </top>
+    <center>
+        <SplitPane orientation="VERTICAL">
+            <TextArea fx:id="editor" promptText="Escreva seu código aqui..."/>
+            <TextArea fx:id="console" editable="false" style="-fx-control-inner-background: black; -fx-text-fill: green;"/>
+        </SplitPane>
+    </center>
+</BorderPane>
