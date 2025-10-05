@@ -1,0 +1,43 @@
+# Compiled class files
+*.class
+
+# Java package files
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA / Eclipse / VSCode files
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Build folders
+/bin/
+/out/
+/target/
+
+# Logs
+*.log
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# ZIP/ISO outputs
+*.zip
+*.iso
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Compiled binaries from C/C++/C#
+*.exe
+*.o
+*.obj
+*.dll
+*.so
+*.pdb
