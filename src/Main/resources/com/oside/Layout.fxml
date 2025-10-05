@@ -12,6 +12,11 @@
                 <MenuItem text="Salvar Projeto" onAction="#saveProject"/>
                 <MenuItem text="Gerar .zip/.iso" onAction="#generateOutput"/>
             </Menu>
+            <Menu text="Compilar">
+                <MenuItem text="Compilar C" onAction="#compileC"/>
+                <MenuItem text="Compilar C++" onAction="#compileCpp"/>
+                <MenuItem text="Compilar C#" onAction="#compileCSharp"/>
+            </Menu>
         </MenuBar>
     </top>
     <center>
