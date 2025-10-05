@@ -13,28 +13,21 @@ public class ProjectManager {
         projectPath = null;
     }
 
-    // Cria novo projeto em um diretório especificado
     public void newProject(String folderPath) throws IOException {
         projectPath = Paths.get(folderPath);
-        if (!Files.exists(projectPath)) {
-            Files.createDirectories(projectPath);
-        }
-        // Cria pastas básicas
+        if (!Files.exists(projectPath)) Files.createDirectories(projectPath);
         Files.createDirectories(projectPath.resolve("src"));
         Files.createDirectories(projectPath.resolve("bin"));
         Files.createDirectories(projectPath.resolve("assets"));
         System.out.println("Novo projeto criado em: " + projectPath.toString());
     }
 
-    // Salva conteúdo de um arquivo dentro do projeto
     public void saveFile(String fileName, String content) throws IOException {
         if (projectPath == null) throw new IOException("Nenhum projeto aberto!");
         Path filePath = projectPath.resolve("src").resolve(fileName);
         Files.write(filePath, content.getBytes());
-        System.out.println("Arquivo salvo: " + filePath.toString());
     }
 
-    // Abre arquivo dentro do projeto
     public String openFile(String fileName) throws IOException {
         if (projectPath == null) throw new IOException("Nenhum projeto aberto!");
         Path filePath = projectPath.resolve("src").resolve(fileName);
@@ -42,7 +35,6 @@ public class ProjectManager {
         return new String(Files.readAllBytes(filePath));
     }
 
-    // Gera arquivo .zip do projeto completo
     public void generateZip(String outputFileName) throws IOException {
         if (projectPath == null) throw new IOException("Nenhum projeto aberto!");
         Path zipPath = projectPath.resolve(outputFileName);
@@ -55,15 +47,29 @@ public class ProjectManager {
                             zos.putNextEntry(entry);
                             Files.copy(path, zos);
                             zos.closeEntry();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        } catch (IOException e) { e.printStackTrace(); }
                     });
         }
         System.out.println("Arquivo zip gerado: " + zipPath.toString());
     }
 
-    // Configura o caminho do projeto já existente
+    // NOVO: gera ISO usando ferramenta externa
+    public void generateISO(String outputISO) throws IOException, InterruptedException {
+        if (projectPath == null) throw new IOException("Nenhum projeto aberto!");
+        // Caminho do comando externo (Windows exemplo: oscdimg)
+        String command = "oscdimg -n -m " + projectPath.toAbsolutePath() + " " + outputISO;
+        ProcessBuilder pb = new ProcessBuilder(command.split(" "));
+        pb.redirectErrorStream(true);
+        Process process = pb.start();
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+        while ((line = reader.readLine()) != null) System.out.println(line);
+
+        process.waitFor();
+        System.out.println("Arquivo ISO gerado: " + outputISO);
+    }
+
     public void openProject(String folderPath) throws IOException {
         Path path = Paths.get(folderPath);
         if (!Files.exists(path)) throw new FileNotFoundException("Projeto não encontrado!");
@@ -74,4 +80,4 @@ public class ProjectManager {
     public Path getProjectPath() {
         return projectPath;
     }
-          }
+                           }
